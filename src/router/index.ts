@@ -1,10 +1,11 @@
-// router/index.ts
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
 import HomeView from '../views/HomeView.vue';
 import RegisterComponent from '../components/auth/RegisterComponent.vue';
 import LoginComponent from '../components/auth/LoginComponent.vue';
-import SaleComponent from '../components/sale/SaleComponent.vue';
 import SellerComponent from '../components/seller/SellerComponent.vue';
+import SaleComponent from '../components/sale/SaleComponent.vue';
+import NewSaleComponent from '../components/sale/NewSale.vue';
+import EditSaleComponent from '../components/sale/EditSale.vue';
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -27,6 +28,19 @@ const routes: Array<RouteRecordRaw> = [
     name: 'sale',
     component: SaleComponent,
     meta: { requiresAuth: true }
+  },
+  {
+    path: '/new-sale',
+    name: 'new-sale',
+    component: NewSaleComponent,
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/edit-sale',
+    name: 'edit-sale',
+    component: EditSaleComponent,
+    meta: { requiresAuth: true },
+    props: true,
   },
   {
     path: '/seller',
