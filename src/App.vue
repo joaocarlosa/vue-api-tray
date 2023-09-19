@@ -21,9 +21,10 @@
 <style>
 .content-wrapper {
   margin-top: 20px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: calc(100vh - 64px);
+  width: 80%;
+  padding: 0 10%; /* Adicione o espaçamento nas laterais usando padding */
+  text-align: center; /* Centraliza o conteúdo horizontalmente */
 }
+
+
 </style>
