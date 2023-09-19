@@ -2,12 +2,7 @@
 import LoginComponentVue from '../auth/LoginComponent.vue';
 <template>
     <div class="container">
-
-
-        <!-- Título -->
         <h4 class="center-align mt-5">Enviar emails</h4>
-
-        <!-- Tabela -->
         <table class="highlight">
             <thead>
                 <tr>
