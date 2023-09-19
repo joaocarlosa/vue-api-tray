@@ -2,10 +2,17 @@ import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
 import HomeView from '../views/HomeView.vue';
 import RegisterComponent from '../components/auth/RegisterComponent.vue';
 import LoginComponent from '../components/auth/LoginComponent.vue';
+
 import SellerComponent from '../components/seller/SellerComponent.vue';
+import EditSellerComponent from '../components/seller/EditSeller.vue';
+import NewSellerComponent from '../components/seller/NewSeller.vue';
+
 import SaleComponent from '../components/sale/SaleComponent.vue';
 import NewSaleComponent from '../components/sale/NewSale.vue';
 import EditSaleComponent from '../components/sale/EditSale.vue';
+
+import EmailComponent from '../components/email/EmailComponent.vue';
+
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -46,6 +53,24 @@ const routes: Array<RouteRecordRaw> = [
     path: '/seller',
     name: 'seller',
     component: SellerComponent,
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/edit-seller',
+    name: 'edit-seller',
+    component: EditSellerComponent,
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/new-seller',
+    name: 'new-seller',
+    component: NewSellerComponent,
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/email',
+    name: 'email',
+    component: EmailComponent,
     meta: { requiresAuth: true }
   }
 ];

@@ -1,4 +1,5 @@
 <template>
+  <router-link to="/new-seller" class="btn btn-primary">Novo Vendedor</router-link>
   <div>
     <h1>Vendedores</h1>
     <table>
@@ -15,9 +16,14 @@
         <tr v-for="seller in paginatedSellers" :key="seller.id">
           <td>{{ seller.id }}</td>
           <td>{{ seller.name }}</td>
-          <td>{{ seller.email }}</td>          
+          <td>{{ seller.email }}</td>
           <td>{{ formatDate(seller.created_at) }}</td>
           <td>{{ formatDate(seller.updated_at) }}</td>
+          <td>
+            <button class="waves-effect waves-light btn-tiny" @click="editSeller(seller)">
+              <i class="material-icons">edit</i>
+            </button>
+          </td>
         </tr>
       </tbody>
     </table>
@@ -32,20 +38,19 @@
 import { defineComponent, ref, onMounted, computed } from 'vue';
 import axios from 'axios';
 import { API_BASE_URL, getAuthHeaders } from '../../api/config';
+import { useRouter } from 'vue-router';
 
 export default defineComponent({
   setup() {
-    // Estado
     const sellers = ref<any[]>([]);
     const currentPage = ref(1);
     const itemsPerPage = 10;
 
-    // Função para buscar vendedores da API
     const fetchSellers = async () => {
       const headers = getAuthHeaders();
       try {
         const response = await axios.get(`${API_BASE_URL}/sellers`, { headers });
-        // Validar o formato dos dados recebidos
+
         if (Array.isArray(response.data)) {
           sellers.value = response.data;
         } else if (response.data && Array.isArray(response.data.data)) {
@@ -58,7 +63,6 @@ export default defineComponent({
       }
     };
 
-    // Computeds para paginação
     const paginatedSellers = computed(() => {
       const start = (currentPage.value - 1) * itemsPerPage;
       const end = start + itemsPerPage;
@@ -67,7 +71,6 @@ export default defineComponent({
 
     const pageCount = computed(() => Math.ceil(sellers.value.length / itemsPerPage));
 
-    // Funções para manipulação da paginação
     const nextPage = () => {
       if (currentPage.value < pageCount.value) {
         currentPage.value++;
@@ -80,19 +83,33 @@ export default defineComponent({
       }
     };
 
-    // Buscar os dados ao montar o componente
     onMounted(() => {
       fetchSellers();
     });
 
     const formatDate = (dateString: string): string => {
-  if (!dateString) return '';
-  const date = new Date(dateString);
-  // Aqui você pode formatar a data como desejar
-  return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
-};
+      if (!dateString) return '';
+      const date = new Date(dateString);
 
-    // Retorno do setup
+      return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
+    };
+
+    const router = useRouter();
+
+    const editSeller = (seller: any) => {
+      router.push({
+        name: 'edit-seller',
+        query: {
+          id: seller.id,
+          name: seller.name,
+          email: seller.email,
+          created_at: seller.created_at,
+          updated_at: seller.updated_at
+        }
+      });
+    };
+
+
     return {
       sellers,
       paginatedSellers,
@@ -100,13 +117,12 @@ export default defineComponent({
       nextPage,
       previousPage,
       pageCount,
-      formatDate
+      formatDate,
+      editSeller
     };
   },
 });
 </script>
 
 
-<style>
-/* Seu CSS aqui */
-</style>
+<style></style>
